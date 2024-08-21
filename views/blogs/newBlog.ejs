@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<%- include('../partials/head') %>
+<style>
+  label{
+    font-size: 20px;
+    font-weight: bold;
+  }
+  input {
+    width: 95%;
+    padding: 10px;
+    margin: 6px 0px;
+    border-radius: 5px;
+    border: 1px solid rgba(180, 180, 180, 0.676);
+  }
+  textarea {
+    width: 95%;
+    padding: 10px;
+    margin: 6px 0px;
+    border: 1px solid rgba(180, 180, 180, 0.676);
+    border-radius: 5px;
+  }
+  button {
+    padding: 10px;
+    margin: 6px 0px;
+    width: 99%;
+    background-color: #444;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+  }
+</style>
+<body>
+  <%- include('../partials/header') %>
+
+  <main>
+    <div id="main-div">
+      <form action="/blogs" method="post">
+        <label for="title">Blog title:</label>
+        <br>
+        <input type="text" id="title" name="title" required /><br /><br />
+        
+        <label for="summary">Blog summary:</label>
+        <br>
+        <input type="text" id="summary" name="summary" required /><br /><br />
+        
+        <label for="Content">Blog content:</label>
+        <br>
+        <textarea id="blogContent" name="content" required></textarea><br /><br />
+
+        <label for="author">Author:</label>
+        <br>
+        <input type="text" id="author" name="author" required /><br /><br />
+
+        <button>Submit</button>
+      </form>
+    </div>
+  </main>
+
+  <%- include('../partials/footer') %>
+</body>

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<%- include('partials/head') %>
+<style>
+    #span{
+        text-align: center;
+        background-color: red;
+        color: white;
+        padding: 10px;
+        margin: 10px;
+        margin-left: 45%;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+</style>
+<body>
+  <%- include('partials/header') %>
+
+  <main>
+    <div id="main-div" style="background-color: rgba(235, 160, 160, 0.4);">
+      <h1 style="color: red; text-align: center;">Blog Creation Failed</h1>
+      <p id="para-inside-main" style="font-size: 20px; text-align: center;">
+        There was an error while creating your blog. Please try again.
+      </p>
+      <a href="/newBlog"><span id="span">Try Again</span></a>
+    </div>
+  </main>
+
+  <%- include('partials/footer') %>
+</body>

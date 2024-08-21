@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<%- include('../partials/head') %>
+<style>
+  #span {
+    text-align: center;
+    background-color: rgba(6, 195, 6, 0.626);
+    color: white;
+    padding: 10px;
+    margin: 10px;
+    margin-left: 45%;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+</style>
+<body>
+  <%- include('../partials/header') %>
+
+  <main>
+    <div id="main-div" style="background-color: rgba(255, 0, 0, 0.196)">
+      <h1 style="color: red; text-align: center">Blog Deleted Successfully!</h1>
+      <p id="para-inside-main" style="font-size: 20px; text-align: center">
+        Your blog has been deleted successfully. You can now see the changes in
+        the blog list page.
+      </p>
+      <a href="/blogs"><span id="span">Go to Blog List</span></a>
+    </div>
+  </main>
+
+  <%- include('../partials/footer') %>
+</body>

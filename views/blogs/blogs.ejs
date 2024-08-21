@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<%- include('../partials/head') %>
+<body>
+  <%- include('../partials/header') %>
+
+  <style>
+    .inner-div-blogs {
+      margin: 20px 0px;
+      padding: 15px;
+      border: 1px solid #ddd;
+      border-left: 3px solid #444;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    .inner-div-blogs > p {
+      margin-top: 6px;
+    }
+    .h2 {
+      margin-bottom: 5px;
+    }
+    .btn {
+      background-color: rgba(6, 195, 6, 0.626);
+      color: white;
+      padding: 10px;
+      margin: 10px;
+      margin-left: 4%;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+  </style>
+  <main>
+    <div id="main-div">
+      <h1>All Blogposts</h1>
+      <% if (blogs.length > 0) { %> <% for(let i = blogs.length - 1 ; i >= 0 ;
+      i--) { %>
+      <div class="inner-div-blogs">
+        <h2 class="h2">
+          <a style="color: black" href="/blogs/id/<%= blogs[i].id %>">
+            <%= blogs[i].title %></a
+          >
+        </h2>
+        <hr />
+        <p style="float: right"><%= blogs[i].author %></p>
+        <p style="margin: 30px 0px 15px 0px"><%= blogs[i].summary %></p>
+      </div>
+      <% } %> <% } else { %>
+      <p style="margin: 20px 0px; font-size: 20px">
+        Seems like there is no blog.
+      </p>
+      <p style="font-size: 20px">Wanna add a new blog?</p>
+      <a href="/newBlog"><button class="btn">Create Blog</button></a>
+      <% } %>
+    </div>
+  </main>
+
+  <%- include('../partials/footer') %>
+</body>

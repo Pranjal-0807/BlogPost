@@ -1,0 +1,14 @@
+<header>
+  <a href="/"><h2>BlogPost</h2></a>
+  <div id="inner-div">
+    <% if(user) { %>
+    <a href="/blogs"><p>Blogs</p></a>
+    <a href="/newBlog"><p>New Blog</p></a>
+    <a href="/logout">Logout</a>
+    <% } else { %>
+      <a href="/login">Login</a>
+      <a href="/signup">Signup</a>
+      <% } %>
+      <a href="/about"><p>About</p></a>
+  </div>
+</header>
