@@ -1,13 +1,13 @@
 const express = require("express");
 const router = express.Router();
 const bodyParser = require("body-parser");
-// importing user schema
-const User = require("../models/UserModel");
-
-// "{"
 const jwt = require("jsonwebtoken");
 const cookieParser = require("cookie-parser");
-// "}"
+// {
+const { hashPassword, comparePassword } = require("../utils/passBcrypt");
+// }
+// importing user schema
+const User = require("../models/UserModel");
 
 // Signup route
 router.get("/signup", (req, res) => {
@@ -37,45 +37,77 @@ function getToken(email) {
 }
 // "}"
 
-router.post("/signup", async (req, res) => {
+router.post("/signup", (req, res) => {
   const obj = req.body;
-  console.log(obj);
-  User.create(obj)
-    .then((user) => {
-      console.log("User created successfully");
-      // "{"
-      const token = getToken(user.email);
-      res.cookie("authenticationToken", token);
-      // "}"
-      res.redirect("/blogs");
+
+  // Check if user with the same email already exists
+  User.findOne({ email: obj.email })
+    .then((existingUser) => {
+      if (existingUser) {
+        console.log("User with this email already exists");
+        return res.status(400).send("User with this email already exists!");
+      }
+
+      // Hash the password
+      return hashPassword(obj.password)
+        .then((hashedPassword) => {
+          obj.password = hashedPassword;
+
+          // Create the user in the database
+          return User.create(obj);
+        })
+        .then((user) => {
+          console.log("User created successfully");
+
+          // Generate token and set cookie
+          const token = getToken(user.email);
+          res.cookie("authenticationToken", token);
+
+          // Redirect to blogs
+          res.redirect("/blogs");
+        });
     })
     .catch((err) => {
-      console.log(err);
-      res.status(400).send(`Error: ${err}`);
+      console.log("Error during signup process:", err);
+      res.status(500).send(`Error: ${err}`);
     });
 });
 
-router.post("/login", async (req, res) => {
+router.post("/login", (req, res) => {
   const { email, password } = req.body;
   console.log(req.body);
+
   User.findOne({ email })
     .then((user) => {
       if (!user) {
         console.log("User not found");
-      } else if (user.password !== password) {
-        res.status(400).send("Incorrect Password!");
-      } else {
-        console.log("User logged in successfully!");
-        // "{"
-        const token = getToken(user.email);
-        res.cookie("authenticationToken", token);
-        // "}"
-        res.redirect("/blogs");
+        return res.status(400).send("User not found!");
       }
+
+      // Compare the password
+      return comparePassword(password, user.password)
+        .then((isMatch) => {
+          if (isMatch) {
+            console.log("User logged in successfully!");
+
+            // Generate token and set cookie
+            const token = getToken(user.email);
+            res.cookie("authenticationToken", token);
+
+            // Redirect to blogs
+            res.redirect("/blogs");
+          } else {
+            return res.status(400).send("Incorrect Password!");
+          }
+        })
+        .catch((err) => {
+          console.log("Error during password comparison:", err);
+          res.status(500).send("Internal Server Error");
+        });
     })
     .catch((err) => {
-      console.log(err);
-      res.status(400).send(`Error: ${err}`);
+      console.log("Error during user lookup:", err);
+      res.status(500).send("Internal Server Error");
     });
 });
 
