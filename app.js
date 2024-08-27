@@ -12,9 +12,11 @@ const port = 3000;
 app.set("view engine", "ejs");
 app.set("views", "./views");
 
-const USER_NAME = "mit-user";
-const PASSWORD = "mit-password112";
-const DB_NAME = "mit-db";
+const dotenv = require("dotenv");
+dotenv.config();
+const USER_NAME = process.env.USER_NAME;
+const PASSWORD = process.env.PASSWORD;
+const DB_NAME = process.env.DB_NAME;
 
 const dbURI = `mongodb+srv://${USER_NAME}:${PASSWORD}@merncluster.zan8h.mongodb.net/${DB_NAME}?retryWrites=true&w=majority&appName=mernCluster`;
 
