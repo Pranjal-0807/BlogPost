@@ -2,7 +2,7 @@ const BlogPost = require("../models/BlogPost");
 
 let DeleteBlog = (req, res) => {
   const idFromPathVariable = req.params.id;
-  console.log("id:", typeof idFromPathVariable);
+  // console.log("id:", typeof idFromPathVariable);
   BlogPost.findByIdAndDelete(idFromPathVariable)
     .then((result) => {
       if (!result) {

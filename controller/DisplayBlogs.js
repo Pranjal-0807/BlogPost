@@ -1,7 +1,11 @@
 const BlogPost = require("../models/BlogPost");
 
 let displayBlogs = (req, res) => {
-  BlogPost.find()
+  // {
+  const userIDFromToken = res.locals.user.id;
+  BlogPost.find({ author: userIDFromToken })
+    .populate("author")
+    // }
     .then((blogs) => {
       res.render("../views/blogs/blogs", { blogs });
     })

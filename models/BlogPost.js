@@ -8,7 +8,7 @@ const blogPostSchema = new Schema(
     title: { type: String, required: true },
     summary: { type: String, required: true },
     content: { type: String, required: true },
-    author: { type: String, required: true },
+    author: { type: Schema.Types.ObjectId, ref: "User", required: true },
   },
   { timestamps: true } // Automatically manage createdAt and updatedAt fields
 );

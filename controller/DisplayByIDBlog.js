@@ -4,6 +4,9 @@ let DisplayBlogById = (req, res) => {
   const idFromPathVariable = req.params.id;
   console.log("id:", typeof idFromPathVariable);
   BlogPost.findById(idFromPathVariable)
+    // {
+    .populate("author")
+    // }
     .then((blog) => {
       if (!blog) {
         res.status(404).render("error");

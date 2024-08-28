@@ -30,11 +30,13 @@ router.use(bodyParser.urlencoded({ extended: true }));
 
 // "{"
 router.use(cookieParser());
-function getToken(email) {
+// {
+function getToken(email, id) {
   const secret = "mySecret";
-  const token = jwt.sign({ email }, secret);
+  const token = jwt.sign({ email, id }, secret, { expiresIn: "7d" });
   return token;
 }
+// }
 // "}"
 
 router.post("/signup", (req, res) => {
@@ -60,9 +62,13 @@ router.post("/signup", (req, res) => {
           console.log("User created successfully");
 
           // Generate token and set cookie
-          const token = getToken(user.email);
-          res.cookie("authenticationToken", token);
-
+          // {
+          const token = getToken(user.email, user._id);
+          res.cookie("authenticationToken", token, {
+            httpOnly: true,
+            maxAge: 7 * 24 * 60 * 60 * 1000,
+          });
+          // }
           // Redirect to blogs
           res.redirect("/blogs");
         });
@@ -74,7 +80,9 @@ router.post("/signup", (req, res) => {
 });
 
 router.post("/login", (req, res) => {
-  const { email, password } = req.body;
+  // {
+  const { email, password, _id } = req.body;
+  // }
   console.log(req.body);
 
   User.findOne({ email })
@@ -91,9 +99,13 @@ router.post("/login", (req, res) => {
             console.log("User logged in successfully!");
 
             // Generate token and set cookie
-            const token = getToken(user.email);
-            res.cookie("authenticationToken", token);
-
+            // {
+            const token = getToken(user.email, user._id);
+            res.cookie("authenticationToken", token, {
+              httpOnly: true,
+              maxAge: 7 * 24 * 60 * 60 * 1000,
+            });
+            // }
             // Redirect to blogs
             res.redirect("/blogs");
           } else {

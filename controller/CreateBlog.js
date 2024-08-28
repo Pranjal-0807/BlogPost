@@ -1,9 +1,16 @@
 const BlogPost = require("../models/BlogPost");
 
 let CreateBlog = (req, res) => {
-  const newBlog = new BlogPost(req.body);
-  newBlog
-    .save()
+  // {
+  const userIDFromToken = res.locals.user.id;
+  const blog = {
+    title: req.body.title,
+    summary: req.body.summary,
+    content: req.body.content,
+    author: userIDFromToken,
+  };
+  // }
+  BlogPost.create(blog)
     .then(() => {
       res.redirect("/success");
     })
