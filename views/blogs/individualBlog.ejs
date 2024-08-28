@@ -34,7 +34,7 @@
       <div class="inner-div-blogs">
         <h2 style="margin-bottom: 5px"><%= blog.title %></h2>
         <hr />
-        <p style="float: right"><%= blog.author %></p>
+        <p style="float: right"><%= blog.author.name %></p>
         <p style="margin: 30px 0px 15px 0px"><%= blog.summary %></p>
         <p><%= blog.content %></p>
         <a href="/deleteBlog/id/<%= blog.id %>"><button class="delete-btn">Delete Blog</button></a>
